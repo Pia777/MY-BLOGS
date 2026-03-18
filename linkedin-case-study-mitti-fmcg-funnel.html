@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Study — Mitti & Co. D2C Marketing Funnel</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Outfit:wght@300;400;500;600;700&family=Inconsolata:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --soil:     #2C1A0E;
+    --clay:     #C4622D;
+    --terracotta: #D97B4A;
+    --sand:     #F2E8D9;
+    --sage:     #5C7A5E;
+    --moss:     #3D5C40;
+    --cream:    #FAF6F0;
+    --fog:      #E8E0D4;
+    --ink:      #1C1008;
+    --muted:    #7A6A5A;
+    --rule:     #D8CFC3;
+    --white:    #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+  }
+
+  /* Grain */
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999; opacity: 0.6;
+  }
+
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 24px 100px;
+  }
+
+  /* ── MASTHEAD ── */
+  .masthead {
+    background: var(--soil);
+    border-radius: 16px 16px 0 0;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+    animation: rise 0.7s cubic-bezier(0.22,1,0.36,1) both;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(32px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Decorative top stripe */
+  .stripe-row {
+    display: flex;
+    height: 6px;
+  }
+  .stripe-row span { flex: 1; }
+  .s1 { background: var(--clay); }
+  .s2 { background: var(--terracotta); }
+  .s3 { background: var(--sage); }
+  .s4 { background: var(--moss); }
+  .s5 { background: #C4A882; }
+
+  .masthead-inner {
+    padding: 40px 48px 44px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Floating circle bg elements */
+  .masthead-inner::before {
+    content: '';
+    position: absolute; top: -100px; right: -100px;
+    width: 320px; height: 320px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(196,98,45,0.25) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .masthead-inner::after {
+    content: '';
+    position: absolute; bottom: -80px; left: 5%;
+    width: 240px; height: 240px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(92,122,94,0.2) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(196,98,45,0.25);
+    border: 1px solid rgba(196,98,45,0.5);
+    color: #E8A882;
+    font-family: 'Inconsolata', monospace;
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 2.5px; text-transform: uppercase;
+    padding: 5px 14px; border-radius: 3px;
+    margin-bottom: 20px;
+  }
+
+  .eyebrow-dot {
+    width: 6px; height: 6px;
+    background: #E8A882; border-radius: 50%;
+    animation: blink 2.4s ease infinite;
+  }
+  @keyframes blink {
+    0%,100% { opacity: 1; } 50% { opacity: 0.3; }
+  }
+
+  .masthead-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 700;
+    color: var(--sand);
+    line-height: 1.1;
+    max-width: 580px;
+    position: relative; z-index: 1;
+  }
+
+  .masthead-title em {
+    font-style: italic;
+    color: var(--terracotta);
+  }
+
+  .masthead-sub {
+    margin-top: 14px;
+    color: #9C8C7A;
+    font-size: 14px; font-weight: 400;
+    letter-spacing: 0.3px;
+    position: relative; z-index: 1;
+  }
+
+  .brand-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 20px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 30px;
+    padding: 8px 16px;
+    color: #C8B89A;
+    font-size: 13px; font-weight: 500;
+    position: relative; z-index: 1;
+  }
+
+  .brand-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--terracotta);
+  }
+
+  /* ── AUTHOR BAR ── */
+  .author-bar {
+    background: #F5EFE6;
+    border-left: 1px solid var(--rule);
+    border-right: 1px solid var(--rule);
+    padding: 16px 48px;
+    display: flex; align-items: center; gap: 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .av {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--clay), var(--soil));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px; font-weight: 700; color: var(--sand);
+    flex-shrink: 0;
+  }
+
+  .av-name { font-size: 14px; font-weight: 600; color: var(--ink); }
+  .av-meta { font-size: 12px; color: var(--muted); }
+
+  .follow-btn {
+    margin-left: auto;
+    border: 1.5px solid var(--clay);
+    color: var(--clay);
+    background: transparent;
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px; font-weight: 600;
+    padding: 6px 18px; border-radius: 20px;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .follow-btn:hover { background: var(--clay); color: white; }
+
+  /* ── CARD (main content wrapper) ── */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-top: none;
+    border-radius: 0 0 16px 16px;
+    overflow: hidden;
+  }
+
+  .body { padding: 44px 48px 32px; }
+
+  /* ── TYPOGRAPHY ── */
+  .hook {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 600;
+    color: var(--ink); line-height: 1.45;
+    padding-bottom: 24px;
+    border-bottom: 2px solid var(--fog);
+    margin-bottom: 24px;
+  }
+
+  .hook mark {
+    background: #F5E6D3; padding: 0 3px; border-radius: 2px;
+    font-style: italic;
+  }
+
+  p {
+    font-size: 15px; line-height: 1.8;
+    color: #3C2C1C; margin-bottom: 16px;
+    font-weight: 300;
+  }
+
+  strong { font-weight: 600; color: var(--ink); }
+
+  .sec-head {
+    display: flex; align-items: center; gap: 12px;
+    margin: 36px 0 18px;
+  }
+
+  .sec-num {
+    width: 30px; height: 30px;
+    background: var(--soil); color: var(--sand);
+    font-family: 'Inconsolata', monospace;
+    font-size: 12px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; flex-shrink: 0;
+  }
+
+  .sec-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-weight: 700; color: var(--ink);
+  }
+
+  /* ── BRAND SNAPSHOT ── */
+  .brand-snapshot {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    border-radius: 12px; overflow: hidden;
+    margin: 24px 0;
+  }
+
+  .snap-cell {
+    background: var(--white);
+    padding: 22px 18px; text-align: center;
+  }
+
+  .snap-icon { font-size: 26px; margin-bottom: 8px; }
+
+  .snap-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px; font-weight: 700;
+    color: var(--clay); line-height: 1; margin-bottom: 4px;
+  }
+
+  .snap-label {
+    font-size: 11px; color: var(--muted);
+    font-weight: 500; letter-spacing: 0.5px;
+    font-family: 'Inconsolata', monospace;
+  }
+
+  /* ── FUNNEL ── */
+  .funnel-box {
+    background: #FBF5EE;
+    border: 1px solid #E8D8C4;
+    border-radius: 14px;
+    padding: 28px 26px; margin: 24px 0;
+  }
+
+  .funnel-label {
+    font-family: 'Inconsolata', monospace;
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--clay); margin-bottom: 22px;
+  }
+
+  .f-row {
+    display: flex; align-items: center;
+    gap: 12px; margin-bottom: 6px;
+  }
+
+  .f-stage {
+    font-family: 'Inconsolata', monospace;
+    font-size: 11px; font-weight: 600;
+    color: var(--ink); width: 160px; flex-shrink: 0;
+  }
+
+  .f-track {
+    flex: 1; height: 30px;
+    background: rgba(196,98,45,0.08);
+    border-radius: 5px; overflow: hidden;
+  }
+
+  .f-fill {
+    height: 100%; border-radius: 5px;
+    display: flex; align-items: center;
+    padding-left: 12px;
+    font-size: 11px; font-weight: 600; color: white;
+    font-family: 'Inconsolata', monospace;
+    animation: barGrow 1.5s cubic-bezier(0.22,1,0.36,1) both;
+  }
+
+  @keyframes barGrow { from { width: 0% !important; } }
+
+  .fb1 { background: linear-gradient(90deg, #C4622D, #D97B4A); width: 100%; animation-delay: 0.1s; }
+  .fb2 { background: linear-gradient(90deg, #C86A35, #DE8354); width: 58%;  animation-delay: 0.2s; }
+  .fb3 { background: linear-gradient(90deg, #5C7A5E, #7A9E7C); width: 36%;  animation-delay: 0.3s; }
+  .fb4 { background: linear-gradient(90deg, #4A6B4C, #5C7A5E); width: 22%;  animation-delay: 0.4s; }
+  .fb5 { background: linear-gradient(90deg, #C4A060, #D4B070); width: 14%;  animation-delay: 0.5s; }
+  .fb6 { background: linear-gradient(90deg, #3D5C40, #4A7050); width: 8%;   animation-delay: 0.6s; }
+
+  .f-count {
+    font-size: 11px; font-family: 'Inconsolata', monospace;
+    color: var(--muted); width: 80px; text-align: right; flex-shrink: 0;
+  }
+
+  .f-drop {
+    text-align: center; margin: 2px 0 2px 172px;
+    font-size: 11px; color: var(--terracotta);
+    font-weight: 600; font-family: 'Inconsolata', monospace;
+  }
+
+  /* ── CHANNEL GRID ── */
+  .ch-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px; margin: 20px 0;
+  }
+
+  .ch-card {
+    border-radius: 12px; padding: 20px;
+    border: 1px solid transparent;
+  }
+
+  .ch-card.clay  { background: #FDF0E8; border-color: #EAC4A8; }
+  .ch-card.sage  { background: #EDF4EE; border-color: #B8D4BA; }
+  .ch-card.gold  { background: #FBF5E6; border-color: #E8D098; }
+  .ch-card.slate { background: #EDF2F8; border-color: #BACCE8; }
+
+  .ch-icon { font-size: 24px; margin-bottom: 10px; }
+
+  .ch-label {
+    font-family: 'Inconsolata', monospace;
+    font-size: 9px; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .clay .ch-label  { color: var(--clay); }
+  .sage .ch-label  { color: var(--sage); }
+  .gold .ch-label  { color: #8B6914; }
+  .slate .ch-label { color: #2C5282; }
+
+  .ch-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; font-weight: 700;
+    color: var(--ink); margin-bottom: 6px;
+  }
+
+  .ch-desc { font-size: 12px; color: var(--muted); line-height: 1.55; }
+
+  .ch-stat {
+    margin-top: 10px;
+    font-family: 'Inconsolata', monospace;
+    font-size: 12px; font-weight: 600;
+  }
+
+  .clay .ch-stat  { color: var(--clay); }
+  .sage .ch-stat  { color: var(--sage); }
+  .gold .ch-stat  { color: #8B6914; }
+  .slate .ch-stat { color: #2C5282; }
+
+  /* ── PULL QUOTE ── */
+  .pq {
+    margin: 28px 0;
+    padding: 26px 30px;
+    border-left: 4px solid var(--clay);
+    background: linear-gradient(90deg, #FDF0E8 0%, transparent 100%);
+    border-radius: 0 10px 10px 0;
+  }
+
+  .pq blockquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-weight: 600; font-style: italic;
+    color: var(--ink); line-height: 1.4;
+  }
+
+  .pq .attr {
+    margin-top: 10px; font-size: 12px;
+    color: var(--muted); font-weight: 500;
+    font-family: 'Inconsolata', monospace;
+  }
+
+  /* ── STAGE DEEP DIVES ── */
+  .stage-card {
+    border-radius: 12px; overflow: hidden;
+    margin-bottom: 14px;
+    border: 1px solid var(--rule);
+  }
+
+  .stage-head {
+    display: flex; align-items: center; gap: 14px;
+    padding: 16px 20px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .stage-badge {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+
+  .stage-name {
+    font-size: 15px; font-weight: 600; color: var(--ink); flex: 1;
+  }
+
+  .stage-rate {
+    font-family: 'Inconsolata', monospace;
+    font-size: 12px; font-weight: 600;
+  }
+
+  .stage-chevron {
+    font-size: 12px; color: var(--muted);
+    transition: transform 0.3s; margin-left: 8px;
+  }
+
+  .stage-card.open .stage-chevron { transform: rotate(180deg); }
+
+  .stage-body {
+    display: none;
+    padding: 0 20px 20px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .stage-card.open .stage-body { display: block; }
+
+  .tactic-row {
+    display: flex; align-items: flex-start;
+    gap: 10px; padding: 10px 0;
+    border-bottom: 1px solid #F0EAE2;
+    font-size: 13px; color: #3C2C1C; line-height: 1.5;
+  }
+
+  .tactic-row:last-child { border-bottom: none; }
+
+  .tactic-icon { font-size: 14px; margin-top: 1px; flex-shrink: 0; }
+
+  /* ── BEFORE/AFTER ── */
+  .ba-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 14px; margin: 20px 0;
+  }
+
+  .ba { border-radius: 12px; padding: 20px; }
+  .ba.before { background: #FBF1EA; border: 1px solid #E8C8A8; }
+  .ba.after  { background: #EDF4EE; border: 1px solid #B8D4BA; }
+
+  .ba-head {
+    font-family: 'Inconsolata', monospace;
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    font-weight: 600; margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .before .ba-head { color: var(--clay); }
+  .after  .ba-head { color: var(--sage); }
+
+  .ba-item {
+    display: flex; align-items: flex-start;
+    gap: 8px; font-size: 13px; color: #3C2C1C;
+    margin-bottom: 9px; line-height: 1.5;
+  }
+
+  .ba-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    margin-top: 6px; flex-shrink: 0;
+  }
+
+  .before .ba-dot { background: var(--terracotta); }
+  .after  .ba-dot { background: var(--sage); }
+
+  /* ── KPI TABLE ── */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px; background: var(--rule);
+    border: 1px solid var(--rule); border-radius: 12px;
+    overflow: hidden; margin: 24px 0;
+  }
+
+  .kpi-cell {
+    background: var(--white); padding: 20px 14px; text-align: center;
+  }
+
+  .kpi-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px; font-weight: 700;
+    line-height: 1; margin-bottom: 4px; display: block;
+  }
+
+  .kpi-val.green  { color: var(--moss); }
+  .kpi-val.clay   { color: var(--clay); }
+  .kpi-val.gold   { color: #8B6914; }
+  .kpi-val.slate  { color: #2C5282; }
+
+  .kpi-lbl {
+    font-size: 10px; color: var(--muted);
+    font-weight: 500; letter-spacing: 0.4px;
+    font-family: 'Inconsolata', monospace;
+  }
+
+  /* ── TAKEAWAYS ── */
+  .tl { display: flex; flex-direction: column; gap: 10px; margin: 18px 0; }
+
+  .ti {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 14px 16px;
+    background: var(--sand); border: 1px solid var(--rule);
+    border-radius: 8px; font-size: 14px; color: var(--ink); line-height: 1.55;
+  }
+
+  .ti-n {
+    font-family: 'Inconsolata', monospace;
+    font-size: 11px; font-weight: 600;
+    color: var(--clay); background: #F5E6D5;
+    border: 1px solid #E8C8A8;
+    border-radius: 4px; padding: 2px 7px;
+    flex-shrink: 0; margin-top: 1px;
+  }
+
+  /* ── ENGAGE ── */
+  .engage {
+    display: flex; align-items: center; gap: 20px;
+    padding: 16px 48px;
+    border-top: 1px solid var(--fog);
+    background: #FAFAF7;
+  }
+
+  .e-btn {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 13px; color: var(--muted); font-weight: 500;
+    cursor: pointer; padding: 6px 10px; border-radius: 6px;
+    transition: all 0.15s; border: none; background: none;
+    font-family: 'Outfit', sans-serif;
+  }
+
+  .e-btn:hover { background: var(--fog); color: var(--ink); }
+  .e-btn.active { color: var(--clay); }
+  .e-btn svg { width: 18px; height: 18px; fill: currentColor; }
+  .e-cnt { font-family: 'Inconsolata', monospace; font-size: 12px; }
+
+  .tags {
+    padding: 0 48px 28px;
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+
+  .tag {
+    font-size: 13px; color: var(--clay);
+    font-weight: 500; cursor: pointer;
+  }
+  .tag:hover { text-decoration: underline; }
+
+  /* ── HYPOTHETICAL BANNER ── */
+  .hypo-banner {
+    background: #FBF5E6;
+    border: 1px solid #E8D098;
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 24px;
+    font-size: 13px; color: #7A6010;
+    font-weight: 400;
+  }
+
+  .hypo-banner strong { color: #5A4808; }
+
+  @media (max-width: 600px) {
+    .page { padding: 16px 12px 60px; }
+    .body { padding: 28px 20px 20px; }
+    .author-bar, .engage, .tags { padding-left: 20px; padding-right: 20px; }
+    .masthead-inner { padding: 28px 20px 32px; }
+    .brand-snapshot, .kpi-row { grid-template-columns: 1fr 1fr; }
+    .kpi-row .kpi-cell:nth-child(3),
+    .kpi-row .kpi-cell:nth-child(4) { border-top: 1px solid var(--rule); }
+    .ch-grid, .ba-grid { grid-template-columns: 1fr; }
+    .f-stage { width: 110px; font-size: 10px; }
+    .f-drop { margin-left: 122px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- MASTHEAD -->
+  <div class="masthead">
+    <div class="stripe-row">
+      <span class="s1"></span><span class="s2"></span>
+      <span class="s3"></span><span class="s4"></span><span class="s5"></span>
+    </div>
+    <div class="masthead-inner">
+      <div class="eyebrow"><span class="eyebrow-dot"></span> Hypothetical Case Study</div>
+      <h1 class="masthead-title">
+        How <em>Mitti &amp; Co.</em> built a full D2C marketing funnel for a sustainable, BPA-free crockery brand — from first impression to repeat order
+      </h1>
+      <p class="masthead-sub">FMCG · D2C · Sustainable Consumer Goods · Marketing Funnel Analysis</p>
+      <div class="brand-pill">
+        <span class="brand-dot"></span>
+        Mitti &amp; Co. — BPA-Free · Earth-Conscious · Made to Last
+      </div>
+    </div>
+  </div>
+
+  <!-- AUTHOR BAR -->
+  <div class="author-bar">
+    <div class="av">P</div>
+    <div>
+      <div class="av-name">Pialy Mukherjee Roy · Business and Operations Manager</div>
+      <div class="av-meta">7 min read · Hypothetical brand analysis</div>
+    </div>
+    <button class="follow-btn">+ Follow</button>
+  </div>
+
+  <!-- CARD -->
+  <div class="card">
+    <div class="body">
+
+      <!-- HYPOTHETICAL NOTE -->
+      <div class="hypo-banner">
+        <span>⚠️</span>
+        <span><strong>Hypothetical scenario.</strong> Mitti &amp; Co. is a fictional brand created for illustrative purposes. All data, metrics, and figures are constructed to represent realistic benchmarks for a D2C sustainable FMCG brand at early-to-mid growth stage in India.</span>
+      </div>
+
+      <div class="hook">
+        The sustainable kitchenware category is growing fast — but <mark>most brands lose 88% of their potential customers</mark> before a single product ships.<br>
+        Here's how a fictional D2C brand, Mitti &amp; Co., could build a funnel that doesn't.
+      </div>
+
+      <p>Imagine a brand born from a simple frustration: <em>why is almost every food container still made from plastic that leaches chemicals into what we eat?</em> Mitti &amp; Co. launches with a clean proposition — a full range of BPA-free, food-safe, sustainably sourced crockery and storage products, sold direct-to-consumer, with no middleman margin.</p>
+
+      <p>The product is strong. The mission is genuine. But in D2C, a great product and a working marketing funnel are two entirely different problems. This case study maps the second one — the complete funnel, from the moment someone first hears of Mitti &amp; Co. to the day they become a loyal, repeat customer who tells their friends.</p>
+
+      <!-- BRAND SNAPSHOT -->
+      <div class="sec-head">
+        <div class="sec-num">00</div>
+        <div class="sec-title">The Brand at a Glance</div>
+      </div>
+
+      <div class="brand-snapshot">
+        <div class="snap-cell">
+          <div class="snap-icon">🫙</div>
+          <div class="snap-val">₹899–</div>
+          <div class="snap-label">Entry price point</div>
+        </div>
+        <div class="snap-cell">
+          <div class="snap-icon">🌿</div>
+          <div class="snap-val">100%</div>
+          <div class="snap-label">BPA-free materials</div>
+        </div>
+        <div class="snap-cell">
+          <div class="snap-icon">🚚</div>
+          <div class="snap-val">D2C</div>
+          <div class="snap-label">Own website + app</div>
+        </div>
+        <div class="snap-cell">
+          <div class="snap-icon">👩‍👩‍👧</div>
+          <div class="snap-val">28–42</div>
+          <div class="snap-label">Core audience age</div>
+        </div>
+        <div class="snap-cell">
+          <div class="snap-icon">🏙️</div>
+          <div class="snap-val">Tier 1–2</div>
+          <div class="snap-label">Primary markets</div>
+        </div>
+        <div class="snap-cell">
+          <div class="snap-icon">📦</div>
+          <div class="snap-val">₹2,800</div>
+          <div class="snap-label">Avg order value</div>
+        </div>
+      </div>
+
+      <p>The target buyer is a health-conscious, environmentally aware urban woman — someone who already reads ingredient labels, buys organic produce when possible, and is acutely aware of the contradiction of storing that food in plastic. She is the <strong>informed decision-maker</strong> for her household's kitchen.</p>
+
+      <!-- THE FUNNEL -->
+      <div class="sec-head">
+        <div class="sec-num">01</div>
+        <div class="sec-title">The Full Funnel — Where People Enter and Where They Leave</div>
+      </div>
+
+      <p>A D2C FMCG funnel for a considered purchase (₹2,800 average order) is longer than most brands plan for. Unlike an impulse product, sustainable crockery requires awareness, education, trust, and then a purchase decision. There are six meaningful stages:</p>
+
+      <div class="funnel-box">
+        <div class="funnel-label">📊 Hypothetical Monthly Funnel — Mitti &amp; Co. (Month 12 Projection)</div>
+
+        <div class="f-row">
+          <div class="f-stage">Awareness</div>
+          <div class="f-track"><div class="f-fill fb1">100,000 impressions</div></div>
+          <div class="f-count">100,000</div>
+        </div>
+        <div class="f-drop">↓ −42% (click-through)</div>
+
+        <div class="f-row">
+          <div class="f-stage">Website Visit</div>
+          <div class="f-track"><div class="f-fill fb2">58,000 sessions</div></div>
+          <div class="f-count">58,000</div>
+        </div>
+        <div class="f-drop">↓ −38% (bounce / no intent)</div>
+
+        <div class="f-row">
+          <div class="f-stage">Product Engaged</div>
+          <div class="f-track"><div class="f-fill fb3">36,000 users</div></div>
+          <div class="f-count">36,000</div>
+        </div>
+        <div class="f-drop">↓ −39% (no add to cart)</div>
+
+        <div class="f-row">
+          <div class="f-stage">Add to Cart</div>
+          <div class="f-track"><div class="f-fill fb4">22,000 users</div></div>
+          <div class="f-count">22,000</div>
+        </div>
+        <div class="f-drop">↓ −36% (checkout drop)</div>
+
+        <div class="f-row">
+          <div class="f-stage">Checkout Initiated</div>
+          <div class="f-track"><div class="f-fill fb5">14,000 users</div></div>
+          <div class="f-count">14,000</div>
+        </div>
+        <div class="f-drop">↓ −43% (payment abandonment)</div>
+
+        <div class="f-row">
+          <div class="f-stage">Order Placed</div>
+          <div class="f-track"><div class="f-fill fb6">8,000 orders</div></div>
+          <div class="f-count">8,000</div>
+        </div>
+      </div>
+
+      <p>An <strong>8% overall conversion rate</strong> from website visit to order is strong for this category — the industry average for considered D2C home goods sits at 3–6%. Reaching it requires deliberate optimisation at every stage. Below is how Mitti &amp; Co. approaches each one.</p>
+
+      <!-- CHANNELS -->
+      <div class="sec-head">
+        <div class="sec-num">02</div>
+        <div class="sec-title">Top of Funnel — Building Awareness for a New Category</div>
+      </div>
+
+      <p>The hardest part of selling sustainable crockery is that most buyers don't yet know they have a problem. The goal of Mitti &amp; Co.'s top-of-funnel is not just brand awareness — it is <strong>problem awareness</strong>. The brand must first make someone care about BPA before it can sell them a solution.</p>
+
+      <div class="ch-grid">
+        <div class="ch-card clay">
+          <div class="ch-icon">📱</div>
+          <div class="ch-label">Paid Social</div>
+          <div class="ch-name">Instagram & Meta Ads</div>
+          <div class="ch-desc">Short-form video content that leads with the problem — "Did you know most food containers release plasticisers when heated?" — before introducing the product. Hook-first creative.</div>
+          <div class="ch-stat">Target: ₹18 CPM · 3.2% CTR</div>
+        </div>
+        <div class="ch-card sage">
+          <div class="ch-icon">🎥</div>
+          <div class="ch-label">Organic Content</div>
+          <div class="ch-name">Reels & YouTube Shorts</div>
+          <div class="ch-desc">The brand creates a content series: "What's in your kitchen?" — testing common containers for toxins, comparing materials, showing the difference. Shared and saved heavily by the target audience.</div>
+          <div class="ch-stat">Target: 500K monthly reach by month 9</div>
+        </div>
+        <div class="ch-card gold">
+          <div class="ch-icon">🤝</div>
+          <div class="ch-label">Influencer</div>
+          <div class="ch-name">Micro-Influencers (10K–80K)</div>
+          <div class="ch-desc">Partnerships with food bloggers, nutritionists, and clean-living creators who already have an audience primed to care. Not celebrity endorsements — credible, niche voices with high trust.</div>
+          <div class="ch-stat">Target: 40 partners · ₹6,000 avg fee</div>
+        </div>
+        <div class="ch-card slate">
+          <div class="ch-icon">🔍</div>
+          <div class="ch-label">SEO & Content</div>
+          <div class="ch-name">Search Intent Articles</div>
+          <div class="ch-desc">60 long-form articles targeting queries like "BPA-free food containers India", "is plastic tiffin safe for kids", "best glass storage containers". Captures high-intent, research-mode buyers.</div>
+          <div class="ch-stat">Target: 22,000 organic visits/month by month 12</div>
+        </div>
+      </div>
+
+      <div class="pq">
+        <blockquote>"In a category where the product is the solution to a problem most people don't know they have, education is your most powerful marketing tool."</blockquote>
+        <div class="attr">— Pialy Mukherjee Roy, Business and Operations Manager</div>
+      </div>
+
+      <!-- STAGE DEEP DIVES -->
+      <div class="sec-head">
+        <div class="sec-num">03</div>
+        <div class="sec-title">Mid-Funnel — Converting Curiosity into Intent</div>
+      </div>
+
+      <p>Someone lands on the Mitti &amp; Co. website having seen a reel about plastic toxicity in lunchboxes. They're curious but not convinced. The mid-funnel has one job: turn that curiosity into enough confidence to add to cart.</p>
+
+      <div class="stage-card open" onclick="this.classList.toggle('open')">
+        <div class="stage-head">
+          <div class="stage-badge" style="background:#FDF0E8;">🧪</div>
+          <div class="stage-name">Trust & Proof Layer</div>
+          <div class="stage-rate" style="color:var(--clay);">Drop risk: HIGH</div>
+          <div class="stage-chevron">▼</div>
+        </div>
+        <div class="stage-body">
+          <p style="font-size:13px;margin-bottom:12px;color:var(--muted);">A sustainable product brand with no physical retail presence must earn trust digitally. Every page element is a trust signal.</p>
+          <div class="tactic-row"><span class="tactic-icon">🏅</span><span><strong>Lab certifications front and centre</strong> — BPA-free, food-grade, FSSAI-compliant certificates on every product page, not buried in an FAQ.</span></div>
+          <div class="tactic-row"><span class="tactic-icon">🎬</span><span><strong>Product story video</strong> — A 90-second video on the homepage showing how the product is made, what it's made from, and why it matters. Reduces bounce rate by establishing brand credibility.</span></div>
+          <div class="tactic-row"><span class="tactic-icon">⭐</span><span><strong>Review architecture</strong> — At least 200 reviews per hero product before scaling ads. Verified buyer reviews with photos. Negative reviews visible and responded to.</span></div>
+          <div class="tactic-row"><span class="tactic-icon">📰</span><span><strong>Press coverage</strong> — Features in Healthshots, The Better India, Economic Times on sustainability brands. Logos displayed as social proof.</span></div>
+        </div>
+      </div>
+
+      <div class="stage-card" onclick="this.classList.toggle('open')">
+        <div class="stage-head">
+          <div class="stage-badge" style="background:#EDF4EE;">📧</div>
+          <div class="stage-name">Email & WhatsApp Nurture</div>
+          <div class="stage-rate" style="color:var(--sage);">Drop risk: MEDIUM</div>
+          <div class="stage-chevron">▼</div>
+        </div>
+        <div class="stage-body">
+          <p style="font-size:13px;margin-bottom:12px;color:var(--muted);">68% of first-time visitors don't buy on the first session. Capture intent with a lead magnet and nurture over 5–7 days.</p>
+          <div class="tactic-row"><span class="tactic-icon">📥</span><span><strong>Lead magnet:</strong> "The Plastic-Free Kitchen Starter Guide" — a downloadable PDF swapping common plastic items for safer alternatives. Captures email at 0% purchase commitment.</span></div>
+          <div class="tactic-row"><span class="tactic-icon">✉️</span><span><strong>5-email welcome series:</strong> Day 0 (the guide), Day 2 (the science of BPA), Day 4 (how Mitti products solve it), Day 6 (customer transformation story), Day 8 (first-order discount).</span></div>
+          <div class="tactic-row"><span class="tactic-icon">💬</span><span><strong>WhatsApp opt-in:</strong> Customers who add to cart but don't purchase get a WhatsApp nudge 6 hours later. Conversion rate from this touchpoint: 11–14% in comparable D2C brands.</span></div>
+        </div>
+      </div>
+
+      <div class="stage-card" onclick="this.classList.toggle('open')">
+        <div class="stage-head">
+          <div class="stage-badge" style="background:#FBF5E6;">🛒</div>
+          <div class="stage-name">Cart & Checkout Optimisation</div>
+          <div class="stage-rate" style="color:#8B6914);">Drop risk: VERY HIGH</div>
+          <div class="stage-chevron">▼</div>
+        </div>
+        <div class="stage-body">
+          <p style="font-size:13px;margin-bottom:12px;color:var(--muted);">Checkout abandonment is the single biggest revenue leak in D2C. For a ₹2,800 AOV product, the barrier is psychology as much as price.</p>
+          <div class="tactic-row"><span class="tactic-icon">🎁</span><span><strong>Bundle anchoring:</strong> Default product page recommends a starter kit (₹3,499) over single items. Feels like more value, increases AOV, reduces per-unit shipping hesitation.</span></div>
+          <div class="tactic-row"><span class="tactic-icon">🚚</span><span><strong>Free shipping threshold:</strong> Set at ₹1,499 — just below the lowest single product. Incentivises adding one more item to cross the threshold.</span></div>
+          <div class="tactic-row"><span class="tactic-icon">💳</span><span><strong>No-cost EMI:</strong> Partner with Simpl and ZestMoney. A ₹2,800 order at ₹233/month removes the psychological barrier of the full price tag.</span></div>
+          <div class="tactic-row"><span class="tactic-icon">🔒</span><span><strong>Trust signals at checkout:</strong> SSL lock, "30-day no-questions return", COD option visible before payment step. Reduces late-stage anxiety.</span></div>
+        </div>
+      </div>
+
+      <!-- BOTTOM FUNNEL -->
+      <div class="sec-head">
+        <div class="sec-num">04</div>
+        <div class="sec-title">Bottom of Funnel — Post-Purchase Is Where Real D2C Revenue Lives</div>
+      </div>
+
+      <p>In a sustainable FMCG brand, the first order is rarely the most profitable. A customer who buys a starter set and has a good experience will replace every piece of plastic in their kitchen over 12 months. <strong>Repeat purchase rate is the defining metric.</strong></p>
+
+      <div class="ba-grid">
+        <div class="ba before">
+          <div class="ba-head">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            Without a Retention System
+          </div>
+          <div class="ba-item"><span class="ba-dot"></span>One-time purchase, no follow-up</div>
+          <div class="ba-item"><span class="ba-dot"></span>Customer receives product and goes silent</div>
+          <div class="ba-item"><span class="ba-dot"></span>No cross-sell to rest of product range</div>
+          <div class="ba-item"><span class="ba-dot"></span>No referral ask — lost word-of-mouth potential</div>
+          <div class="ba-item"><span class="ba-dot"></span>LTV: ~₹2,800 (one order)</div>
+        </div>
+        <div class="ba after">
+          <div class="ba-head">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            With a Retention System
+          </div>
+          <div class="ba-item"><span class="ba-dot"></span>Day 3 post-delivery: "How are you liking it?" WhatsApp check-in</div>
+          <div class="ba-item"><span class="ba-dot"></span>Day 14: Email featuring complementary products to what they bought</div>
+          <div class="ba-item"><span class="ba-dot"></span>Day 30: Referral ask — "Gift a friend ₹300 off, you get ₹300"</div>
+          <div class="ba-item"><span class="ba-dot"></span>Day 60: Replenishment nudge + seasonal bundle offer</div>
+          <div class="ba-item"><span class="ba-dot"></span>LTV: ~₹9,200 over 12 months (3.3× first order)</div>
+        </div>
+      </div>
+
+      <p>The math is simple: acquiring a new customer for a sustainable D2C FMCG brand costs ₹600–₹900 in paid media. <strong>Retaining that customer costs ₹40 in email and WhatsApp automation.</strong> Every repeat purchase is essentially a 95% margin activity.</p>
+
+      <!-- KPIs -->
+      <div class="sec-head">
+        <div class="sec-num">05</div>
+        <div class="sec-title">Hypothetical Year-One Performance Metrics</div>
+      </div>
+
+      <div class="kpi-row">
+        <div class="kpi-cell">
+          <span class="kpi-val clay">₹2.18 Cr</span>
+          <span class="kpi-lbl">Projected Year 1 Revenue</span>
+        </div>
+        <div class="kpi-cell">
+          <span class="kpi-val green">38%</span>
+          <span class="kpi-lbl">Repeat Purchase Rate (Month 12)</span>
+        </div>
+        <div class="kpi-cell">
+          <span class="kpi-val gold">₹740</span>
+          <span class="kpi-lbl">Blended CAC (All Channels)</span>
+        </div>
+        <div class="kpi-cell">
+          <span class="kpi-val slate">₹9,200</span>
+          <span class="kpi-lbl">12-Month Customer LTV</span>
+        </div>
+      </div>
+
+      <p>The LTV:CAC ratio of <strong>12.4:1</strong> is what makes the unit economics work. At this ratio, Mitti &amp; Co. can afford to spend aggressively on acquisition in year two knowing the return compounds with every retained customer.</p>
+
+      <!-- TAKEAWAYS -->
+      <div class="sec-head">
+        <div class="sec-num">06</div>
+        <div class="sec-title">What This Funnel Teaches Any D2C Sustainable FMCG Brand</div>
+      </div>
+
+      <div class="tl">
+        <div class="ti">
+          <span class="ti-n">01</span>
+          <span><strong>Sell the problem before the product.</strong> In a new category, your first marketing job is to make people care about BPA, microplastics, or food safety — not to sell your brand. Problem-aware buyers convert at 4× the rate of brand-aware buyers.</span>
+        </div>
+        <div class="ti">
+          <span class="ti-n">02</span>
+          <span><strong>Education is your most scalable asset.</strong> A 90-second explainer video, a 1,500-word SEO article, or a 5-part email series keeps working for years. A paid ad stops the moment you stop paying. Build content infrastructure before scaling ad spend.</span>
+        </div>
+        <div class="ti">
+          <span class="ti-n">03</span>
+          <span><strong>Mid-funnel is where most D2C brands leak.</strong> Awareness and checkout get all the attention. The real opportunity is the space between — the customer who visited twice, added to cart, and then disappeared. Email and WhatsApp nurture is the cheapest funnel fix available.</span>
+        </div>
+        <div class="ti">
+          <span class="ti-n">04</span>
+          <span><strong>AOV and LTV matter more than conversion rate.</strong> A 2% CVR with ₹9,200 LTV is more valuable than a 6% CVR with ₹2,800 LTV. Design your funnel around the long-term customer, not the first transaction.</span>
+        </div>
+        <div class="ti">
+          <span class="ti-n">05</span>
+          <span><strong>For a sustainability brand, community is a channel.</strong> Customers who believe in the mission recruit for you. Build a referral loop, celebrate customer stories, create a sense of shared identity. Your values are your most defensible competitive advantage.</span>
+        </div>
+        <div class="ti">
+          <span class="ti-n">06</span>
+          <span><strong>Post-purchase is the beginning of the funnel, not the end.</strong> The moment the product arrives at a customer's door is the highest-trust moment in the entire relationship. A good unboxing experience, a thoughtful follow-up message, and a simple referral ask at the right moment can triple the value of that customer.</span>
+        </div>
+      </div>
+
+      <p style="margin-top:24px;">The sustainable consumer goods category is at an inflection point in India. Awareness is rising faster than supply of trustworthy brands. <strong>The brands that build honest funnels — that educate first, sell second, and retain always — will own the next decade of this market.</strong></p>
+
+      <p style="font-style:italic;color:var(--muted);font-size:14px;">If you're building or advising a sustainable D2C brand and want to discuss funnel architecture, drop a 🫙 in the comments and I'll share the full channel-attribution model we use for this category.</p>
+
+    </div><!-- /body -->
+
+    <!-- TAGS -->
+    <div class="tags">
+      <span class="tag">#D2C</span>
+      <span class="tag">#FMCG</span>
+      <span class="tag">#SustainableConsumer</span>
+      <span class="tag">#MarketingFunnel</span>
+      <span class="tag">#BrandBuilding</span>
+      <span class="tag">#GrowthMarketing</span>
+      <span class="tag">#D2CIndia</span>
+      <span class="tag">#ContentMarketing</span>
+      <span class="tag">#CustomerLTV</span>
+    </div>
+
+    <!-- ENGAGE -->
+    <div class="engage">
+      <button class="e-btn" id="lb" onclick="tl()">
+        <svg viewBox="0 0 24 24"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
+        <span class="e-cnt" id="lc">934</span>
+      </button>
+      <button class="e-btn">
+        <svg viewBox="0 0 24 24"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"/></svg>
+        <span class="e-cnt">271 comments</span>
+      </button>
+      <button class="e-btn">
+        <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg>
+        <span class="e-cnt">Repost</span>
+      </button>
+    </div>
+
+  </div><!-- /card -->
+</div><!-- /page -->
+
+<script>
+  let liked = false, n = 934;
+  function tl() {
+    liked = !liked; n += liked ? 1 : -1;
+    document.getElementById('lc').textContent = n.toLocaleString();
+    document.getElementById('lb').classList.toggle('active', liked);
+  }
+</script>
+</body>
+</html>
